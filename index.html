@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор путешественника</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Калькулятор путешественника</h1>
+            <p class="mean">Все расчеты для поездки в одном месте</p>
+        </header>
+
+        <div class="main-grid">
+            <section class="card">
+                <div class="card-header">
+                    <span class="icon"></span>
+                    <h2>Конвертер валют</h2>
+                </div>
+                <div class="card-body">
+                    <div id="loader" class="spinner" title="Загрузка курсов..."></div>
+                    <div id="lastUpdate">Загрузка курса ЦБ...</div>
+                    <div class="input-field">
+                        <label class="unit-label">Сумма</label>
+                        <input type="number" id="moneyValue" placeholder="0.00" title="Введите сумму">
+                    </div>
+                    <div class="select-group">
+                        <select id="fromCur" title="Из валюты">
+                            <option value="RUB">RUB (₽)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CNY">CNY (¥)</option>
+                            <option value="TRY">TRY (₺)</option>
+                        </select>
+                        <span class="divider">→</span>
+                        <select id="toCur" title="В валюту">
+                            <option value="RUB">RUB (₽)</option>
+                            <option value="USD" selected>USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CNY">CNY (¥)</option>
+                            <option value="TRY">TRY (₺)</option>
+                        </select>
+                    </div>
+                    <button class="btn-main" onclick="doCurrency()" title="Конвертировать">Конвертировать</button>
+                    <div id="moneyRes" class="result-label">Ожидание...</div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <span class="icon"></span>
+                    <h2>Единицы измерения</h2>
+                </div>
+                <div class="card-body unit-grid">
+                    <div class="unit-section">
+                        <label class="unit-label">Расстояние</label>
+                        <input type="number" id="distVal" placeholder="Значение" oninput="doDistance()" title="Введите число">
+                        <select id="distType" onchange="doDistance()">
+                            <option value="m-k">Мили ➜ Км</option>
+                            <option value="k-m">Км ➜ Мили</option>
+                        </select>
+                        <div id="distRes" class="result-label">--</div>
+                    </div>
+                    <hr class="unit-divider">
+                    <div class="unit-section">
+                        <label class="unit-label"> Вес</label>
+                        <input type="number" id="weightVal" placeholder="Значение" oninput="doWeight()" title="Введите число">
+                        <select id="weightType" onchange="doWeight()">
+                            <option value="f-kg">Фунты ➜ Кг</option>
+                            <option value="kg-f">Кг ➜ Фунты</option>
+                        </select>
+                        <div id="weightRes" class="result-label">--</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card wide">
+                <div class="card-header">
+                    <span class="icon"></span>
+                    <h2>Планировка бюджета</h2>
+                </div>
+                <div class="card-body">
+                    <div class="budget-controls">
+                        <input type="text" id="itemName" placeholder="Пункт плана" title="Название расхода">
+                        <input type="number" id="itemPrice" placeholder="Сумма" title="Стоимость">
+                        <select id="itemCur">
+                            <option value="RUB">RUB (₽)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CNY">CNY (¥)</option>
+                            <option value="TRY">TRY (₺)</option>
+                        </select>
+                        <button class="btn-add" onclick="addItem()" title="Добавить в список">Добавить</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Оригинал</th>
+                                    <th>Результат</th>
+                                    <th>Удалить</th>
+                                </tr>
+                            </thead>
+                            <tbody id="budgetList"></tbody>
+                        </table>
+                    </div>
+                    <div class="total-footer">
+                        <span style="font-size: 0.9rem; font-weight: normal;">Отображать итог в: </span>
+                        <select id="displayCur" onchange="renderBudget()" style="width: auto; display: inline-block; padding: 5px; height: auto;">
+                            <option value="RUB">RUB (₽)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CNY">CNY (¥)</option>
+                            <option value="TRY">TRY (₺)</option>
+                        </select>
+                        <br>
+                        Итого: <span id="totalSum">0.00</span> <span id="totalCurLabel" class="sum">RUB</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
